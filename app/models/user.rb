@@ -4,6 +4,40 @@ class User < ApplicationRecord
 
   has_many :posts
 
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :follower
+
+  # フォローするメソッド
+  def follow(other_user)
+    following << other_user
+  end
+
+  # フォローを解除するメソッド
+  def unfollow(other_user)
+    following.delete(other_user)
+  end
+
+  # フォローしているか確認するメソッド
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
+  # フォロー中の数を取得するメソッド
+  def following_count
+    following.count
+  end
+
+  # フォロワーの数を取得するメソッド
+  def followers_count
+    followers.count
+  end
+
   validates :email, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
