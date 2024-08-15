@@ -44,6 +44,8 @@ gem "bootsnap", require: false
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem 'sorcery'
+gem 'carrierwave'
+gem 'mini_magick'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
