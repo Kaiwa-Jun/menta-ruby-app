@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+
   # フォローするメソッド
   def follow(other_user)
     following << other_user
@@ -41,6 +43,14 @@ class User < ApplicationRecord
   # フォロワーの数を取得するメソッド
   def followers_count
     followers.count
+  end
+
+  def create_notification(notification_type, notified_by, post)
+    notifications.create(
+      notification_type: notification_type,
+      notified_by: notified_by,
+      post: post
+    )
   end
 
   validates :email, presence: true, uniqueness: true
