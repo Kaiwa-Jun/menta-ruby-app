@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
+  resources :notifications, only: [:index]
   delete 'logout', to: 'sessions#destroy', as: :logout
 end
