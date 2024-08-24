@@ -32,7 +32,7 @@ end
 users.each do |user|
   5.times do |i|
     Post.create!(
-      title: "Sample Post #{i+1} by #{user.email}",
+      title: "sample post #{i+1} by #{user.email}",
       body: "This is the body of sample post #{i+1} by #{user.email}",
       created_at: Time.now,
       user: user
