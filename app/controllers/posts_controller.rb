@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  before_action :require_login, only: [:new, :create, :edit, :update]
+  before_action :require_login, only: [:index, :new, :create, :edit, :update]
   
   def index
     @posts = current_user.posts.order(created_at: :desc)
@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(post_params)
+    @post = current_user.posts.new(post_params)
     if @post.save
       redirect_to posts_path, notice: '投稿が成功しました'
     else
@@ -20,11 +20,17 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(id: params[:id])
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
+      redirect_to posts_path, alert: "指定された投稿が見つかりません。"
+    end
   end
 
   def edit
-    @post = Post.find_by(id: params[:id])
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
+      redirect_to posts_path, alert: "指定された投稿が見つかりません。"
+    end
   end
 
   def update
