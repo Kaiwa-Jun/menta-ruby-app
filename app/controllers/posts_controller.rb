@@ -1,6 +1,9 @@
 class PostsController < ApplicationController
+  
+  before_action :require_login, only: [:index, :new, :create, :edit, :update]
+  
   def index
-    @posts = Post.order(created_at: :desc)
+    @posts = current_user.posts.order(created_at: :desc)
   end
 
   def new
@@ -8,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(post_params)
+    @post = current_user.posts.new(post_params)
     if @post.save
       redirect_to posts_path, notice: '投稿が成功しました'
     else
@@ -17,8 +20,29 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(id: params[:id])
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
+      redirect_to posts_path, alert: "指定された投稿が見つかりません。"
+    end
   end
+
+  def edit
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
+      redirect_to posts_path, alert: "指定された投稿が見つかりません。"
+    end
+  end
+
+  def update
+    @post = Post.find_by(id: params[:id])
+    if @post.update(post_params)
+      redirect_to posts_path, notice: '投稿が更新されました'
+    else
+      render :edit
+    end
+  end
+
+  # 上記アクションには、ログインユーザーかつそのユーザーが投稿したもののみアクセスできるようにすること
 
   private
 
