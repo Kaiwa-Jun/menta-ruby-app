@@ -42,7 +42,15 @@ class PostsController < ApplicationController
     end
   end
 
-  # 上記アクションには、ログインユーザーかつそのユーザーが投稿したもののみアクセスできるようにすること
+  def destroy
+    @post = current_user.posts.find_by(id: params[:id])
+    if @post
+      @post.destroy
+      redirect_to root_path, alert: '投稿を削除しました。'
+    else
+      redirect_to posts_path, alert: '指定された投稿が見つかりません。'
+    end
+  end
 
   private
 
