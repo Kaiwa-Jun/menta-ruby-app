@@ -75,3 +75,9 @@ group :test do
 end
 
 gem 'sorcery'
+
+gem "importmap-rails"
+
+gem "turbo-rails"
+
+gem "stimulus-rails"
