@@ -8,11 +8,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    redirect_to root_path, notice: 'User was successfully created.'
     if @user.save
-      redirect_to root_path, notice: 'User was successfully created.'
     else
       render :new
     end
+  end
+
+  def show
+    @user = User.find_by(id: params[:id])
+    @posts = @user.posts.order(created_at: :desc)
   end
 
   private
