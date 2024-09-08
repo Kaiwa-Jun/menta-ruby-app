@@ -77,7 +77,8 @@ end
 gem 'sorcery'
 
 gem "importmap-rails"
-
 gem "turbo-rails"
-
 gem "stimulus-rails"
+
+gem 'carrierwave'
+gem 'mini_magick'

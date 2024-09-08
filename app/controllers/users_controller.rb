@@ -1,29 +1,43 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
   
-  skip_before_action :require_login, only: %i[create new]
-
   def new
-   @user = User.new
+    @user = User.new
   end
 
   def create
     @user = User.new(user_params)
-    redirect_to root_path, notice: 'User was successfully created.'
     if @user.save
+      redirect_to root_path, notice: 'User was successfully created.'
     else
       render :new
     end
   end
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
     @posts = @user.posts.order(created_at: :desc)
   end
 
-  private
-
-  def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+  def edit
+    @user = current_user
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to @user, notice: 'プロフィールが更新されました'
+    else
+      render :edit
+    end
+  end
+
+  private
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :avatar)
+  end
 end
+
