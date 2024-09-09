@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :require_login, only: [:index, :new, :create, :edit, :update]
   
   def index
-    @posts = current_user.posts.order(created_at: :desc)
+    @posts = Post.order(created_at: :desc)
   end
 
   def new
