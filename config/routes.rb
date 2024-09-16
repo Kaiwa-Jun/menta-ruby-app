@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   root 'posts#index'
   delete 'logout'  => 'sessions#destroy', as: :logout
   resources :users, only: [:new, :create, :show, :edit, :update] do
@@ -8,5 +10,7 @@ Rails.application.routes.draw do
   end
   
   resources :sessions, only: [:new, :create]
-  resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+  resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy]do
+    resource :likes, only: [:create, :destroy]
+  end
 end
