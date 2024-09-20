@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   has_many :likes, dependent: :destroy
 
-  has_many :comments, foreign_key:true
+  has_many :comments, dependent: :destroy
 
   validates :title, presence: true
   validates :body, presence: true

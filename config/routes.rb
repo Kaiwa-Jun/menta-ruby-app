@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'comments/create'
   get 'likes/create'
   get 'likes/destroy'
   root 'posts#index'
@@ -12,5 +13,6 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create]
   resources :posts, only: [:index, :new, :create, :show, :edit, :update, :destroy]do
     resource :likes, only: [:create, :destroy]
+    resource :comments, only: [:create, :destroy]
   end
 end

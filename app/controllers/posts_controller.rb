@@ -21,6 +21,7 @@ class PostsController < ApplicationController
 
   def show
     @post = current_user.posts.find_by(id: params[:id])
+    @comment = Comment.new
     unless @post
       redirect_to posts_path, alert: "指定された投稿が見つかりません。"
     end
