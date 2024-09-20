@@ -9,7 +9,7 @@ before_action :require_login
     if @comment.save
       redirect_to @post, notice: 'コメントが作成されました'
     else
-      render post_path(@post), alert: 'コメントの投稿に失敗しました。'
+      redirect_to @post, alert: 'コメントの投稿に失敗しました。'
     end
   end
 
