@@ -1,5 +1,11 @@
 <div class="container mx-auto mt-8" style="width: 80%;">
   <h1 class="text-3xl font-bold mb-6 text-center">Post List</h1>
+    <%= form_with url: search_posts_path, method: :get, local: true, class: "mb-6" do %>
+      <div class="flex justify-center">
+        <%= text_field_tag :keyword, params[:keyword], placeholder: "投稿を検索...", class: "form-input rounded-l-lg border-gray-300 w-2/3" %>
+        <%= submit_tag "検索", class: "btn bg-blue-500 text-white rounded-r-lg" %>
+      </div>
+    <% end %>
   <div class="grid grid-cols-1 gap-6">
     <% @posts.each do |post| %>
       <div id="post-<%= post.id %>" class="card bg-white shadow-md rounded-xl p-6 hover:bg-gray-100 transition duration-300 ease-in-out relative">

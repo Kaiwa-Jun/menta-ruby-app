@@ -53,6 +53,20 @@ class PostsController < ApplicationController
     end
   end
 
+  def search
+    @keyword = params[:keyword]
+    if@keyword.present?
+      @posts = Post.where("title LIKE(?) OR body LIKE(?)", "%#{@keyword}%", "%#{@keyword}%")
+      if @posts.empty?
+        flash.now[:alert] = "検索ワード#{@keyword}はヒットしませんでした"
+      end
+
+      render :index
+    else
+      redirect_to posts_path, alert: '検索ワードを入力してください'
+    end
+  end
+
   private
 
   def post_params
