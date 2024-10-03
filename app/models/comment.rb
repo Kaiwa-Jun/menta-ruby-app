@@ -4,4 +4,12 @@ class Comment < ApplicationRecord
 
   validates :content,  length: { minimum: 1 }
 
+  after_create :create_notification
+
+  private
+
+  def create_notification
+    post.user.create_notification('comment', user, post)
+  end
+  
 end

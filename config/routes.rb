@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     resource :comments, only: [:create, :destroy]
     get 'search', on: :collection
   end
+
+  resources :notifications, only: [:index] 
 end
