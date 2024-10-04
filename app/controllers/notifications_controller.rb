@@ -5,8 +5,6 @@ before_action :require_login, only: [:index]
 def index
   @notifications = current_user.notifications.where(read: false)
 
-    # ビューがレンダリングされた後に既読にするための処理を
-    # renderアクションの後に行う
     respond_to do |format|
       format.html do
         render

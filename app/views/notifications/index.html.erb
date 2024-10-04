@@ -7,7 +7,7 @@
         <div class="p-4 bg-gray-100 rounded-md shadow flex justify-between items-center <%= 'bg-blue-100' if !notification.read %>">
           <div>
             <p class="text-lg">
-              <%= link_to notification.user.email, user_path(notification.user), class: "font-bold text-blue-600" %>
+              <%= link_to notification.notified_by_id.email, user_path(notification.notified_by_id), class: "font-bold text-blue-600" %>
               <%= notification.notification_type %> your post
               <%= link_to notification.post.title, post_path(notification.post), class: "font-bold text-blue-600" %>
             </p>
@@ -17,8 +17,8 @@
             <span class="text-xs text-white bg-red-600 rounded-full px-2 py-1">New</span>
           <% end %>
           <% if @notifications.empty? %>
-  <p>No notifications.</p>
-<% end %>
+            <p>No notifications.</p>
+          <% end %>
         </div>
       <% end %>
     </div>
