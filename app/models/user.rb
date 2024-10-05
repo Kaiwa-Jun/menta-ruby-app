@@ -4,18 +4,14 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   has_many :posts
-
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  
   has_many :followings, through: :active_relationships, source: :followed
-  
   has_many :followers, through: :passive_relationships, source: :follower
-
   has_many :likes, dependent: :destroy
-
   has_many :comments, dependent: :destroy
+  has_many :notifications, dependent: :destroy  
+
   
   # 指定したユーザーをフォローする
   def follow(user)
@@ -30,6 +26,15 @@ class User < ApplicationRecord
   # 指定したユーザーをフォローしているかどうかを判定
   def following?(user)
     followings.include?(user)
+  end
+
+  def create_notification(notification_type, notified_by, post)
+    Notification.create(
+      user: self,
+      notified_by: notified_by,
+      notification_type: notification_type,
+      post: post
+    )
   end
 
   validates :email, presence: true, uniqueness: true

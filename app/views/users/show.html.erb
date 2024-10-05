@@ -2,12 +2,21 @@
   <div class="bg-white shadow-xl rounded-3xl p-8 relative">
     <div class="absolute top-4 right-4 flex space-x-4">
       <div class="text-center">
+<<<<<<< HEAD
         <p class="text-xl font-bold"><%= @user.followings.count %></p>
         <p class="text-gray-600">フォロー中</p>
       </div>
       <div class="text-center">
         <p class="text-xl font-bold"><%= @user.followers.count %></p>
         <p class="text-gray-600">フォロワー</p>
+=======
+        <p class="text-xl font-bold"><%= @user.followers_count %></p>
+        <p class="text-gray-600">フォロワー</p>
+      </div>
+      <div class="text-center">
+        <p class="text-xl font-bold"><%= @user.following_count %></p>
+        <p class="text-gray-600">フォロー中</p>
+>>>>>>> c175356e588f12f7f5bdc02e15eac8aafb741d93
       </div>
     </div>
     <div class="flex items-center mb-6">
